@@ -1,0 +1,63 @@
+<div id="divContents">
+    <div class="col-sm-2 col-md-1 col-lg-1 sidebar">
+        <ul class="nav nav-sidebar">
+            <!--<li ui-sref-active-eq="active"><a class="btnCtrl" ui-sref="root.aside.main.default">-->
+            <!--<img src="assets/img/mainpage.gif" alt=""><span class="btnCtrlLabel">Главная</span></a>-->
+            <!--</li>-->
+            <li ng-if="currentUser.ServiceCard" permission permission-sref="'root.aside.main.cards'"
+                ng-class="{'active': $state.is('root.aside.main.card-groups') || $state.is('root.aside.main.account-levels') || $state.is('root.aside.main.cards')}">
+                <a class="btnCtrl" ui-sref="root.aside.main.cards">
+                    <img src="assets/img/clients.gif" alt=""><span class="btnCtrlLabel"> Карты</span>
+                </a>
+            </li>
+            <!--<li ui-sref-active-eq="active"><a class="btnCtrl" href="">-->
+            <!--<img src="assets/img/levels.gif" alt=""><span class="btnCtrlLabel">Уровни</span></a>-->
+            <!--</li>-->
+            <li ui-sref-active-eq="active" permission permission-sref="'root.aside.main.objects'">
+                <a class="btnCtrl" ui-sref="root.aside.main.objects">
+                    <img src="assets/img/automats.gif" alt=""><span class="btnCtrlLabel"> Объекты</span>
+                </a>
+            </li>
+            <li ui-sref-active-eq="active" permission permission-sref="'root.aside.main.actions'">
+                <a class="btnCtrl" ui-sref="root.aside.main.actions">
+                    <img src="assets/img/actions.gif" alt=""><span class="btnCtrlLabel"> Акции</span>
+                </a>
+            </li>
+            <li ui-sref-active-eq="active" permission permission-sref="'root.aside.main.logs'">
+                <a class="btnCtrl" ui-sref="root.aside.main.logs">
+                    <img src="assets/img/logs.gif" alt=""><span class="btnCtrlLabel"> Журналы</span>
+                </a>
+            </li>
+            <li ui-sref-active-eq="active" permission permission-sref="'root.aside.main.report'">
+                <a class="btnCtrl" ui-sref="root.aside.main.report">
+                    <img src="assets/img/reports.gif" alt=""><span class="btnCtrlLabel">Отчеты</span>
+                </a>
+            </li>
+            <li ui-sref-active-eq="active" permission permission-sref="'root.aside.main.cash'">
+                <a class="btnCtrl" ui-sref="root.aside.main.cash">
+                    <img src="assets/img/finances.gif" alt=""><span class="btnCtrlLabel"> Счета</span>
+                </a>
+            </li>
+            <!--
+            <li ui-sref-active-eq="active">
+                <a class="btnCtrl" ui-sref="root.aside.main.stats">
+                    <img src="assets/img/levels.gif" alt=""><span class="btnCtrlLabel"> Статистика</span>
+                </a>
+            </li>
+            <li ui-sref-active-eq="active">
+                <a class="btnCtrl" ui-sref="root.aside.main.access">
+                    <img src="assets/img/personal.gif" alt=""><span class="btnCtrlLabel"> Доступ</span>
+                </a>
+            </li>
+            -->
+            <li ui-sref-active-eq="active" permission permission-only="'logout'">
+                <a class="btnCtrl" href="" ng-click="logout()">
+                    <img src="assets/img/logoff.gif" alt=""><span class="btnCtrlLabel"> Выход</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1 col-lg-11 col-lg-offset-1 main"
+         ui-view="content">
+    </div>
+</div>

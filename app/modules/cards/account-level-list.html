@@ -1,0 +1,43 @@
+<div ng-include="'cards/tabs.html'"></div>
+<table ng-table="controller.tableParams" class="table table-bordered table-hover" show-filter="true">
+    <tr ng-repeat="level in $data" ng-class="{'info': level.StartLevel, 'danger': level.Deleted}">
+        <!--<td title="'id'" filter="{ id: 'number'}" sortable="'id'">-->
+            <!--{{level.id}}-->
+        <!--</td>-->
+        <td title="'Название'" filter="{ Name: 'text'}" sortable="'Name'">
+            {{level.Name}}
+        </td>
+        <td class="text-center" title="'Скидка, %'" filter="{ Discount: 'text'}" sortable="'Discount'">
+            {{level.Discount}}%
+        </td>
+        <td class="text-center" title="'Можно вернуть залог'" filter="{ ReturnPawn: 'text'}" sortable="'ReturnPawn'">
+            {{level.ReturnPawn ? 'Да' : 'Нет'}}
+        </td>
+        <td class="text-center" title="'Переход по'" filter="{ PersonsExpression: 'text'}" sortable="'PersonsExpression'">
+            {{level.PersonsExpression ? 'Потраченной сумме' : 'Сумме пополнения'}}
+        </td>
+        <td class="text-center" class="text-center" title="'Сумма'" filter="{ Charge: 'text'}" sortable="'Charge'">
+            {{level.Charge|currency:'грн'}}
+        </td>
+        <td class="text-center" title="'Сумма для мгновенного перехода'" filter="{ OneCheckCharge: 'text'}" sortable="'OneCheckCharge'">
+            {{level.OneCheckCharge|currency:'грн'}}
+        </td>
+        <td class="text-center" title="'Стартовый уровень'" filter="{ StartLevel: 'text'}" sortable="'StartLevel'">
+            <i ng-if="level.StartLevel" class="fa fa-2x fa-star-o" aria-hidden="true"></i>
+            <i ng-if="!level.StartLevel" class="fa fa-minus" aria-hidden="true"></i>
+        </td>
+        <td class="text-center" title="'Удален'" filter="{ Deleted: 'text'}" sortable="'Deleted'">
+            {{level.Deleted ? 'Да' : 'Нет'}}
+        </td>
+        <td data-title="" style="width: 85px">
+            <div class="btn-group pull-right" role="group" aria-label="действия">
+                <a class="btn btn-primary btn-sm" href="" ng-click="controller.setAsStartLevel(level)" aria-label="установить как стартовый" title="установить как стартовый">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-danger btn-sm" href="" ng-click="controller.setDeleted(level)" aria-label="удаление" title="удаление">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+</table>

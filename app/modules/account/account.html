@@ -1,0 +1,118 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well account">
+            <h2 class="sub-header text-center">
+                <small>
+                    <span ng-show="card.account.Blocked" class="label label-warning">заблокирован</span>
+                    <span ng-show="card.account.Deleted" class="label label-danger">удален</span>
+                </small>
+            </h2>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <p><strong><span class="fa fa-fw fa-line-chart text-muted"></span> Уровень: </strong> <a ui-sref="root.aside.main.account-levels">{{::card.account.level.Name}}</a></p>
+                    <p><strong><span class="fa fa-fw fa-users text-muted"></span> Группа: </strong> <a ui-sref="root.aside.main.card-groups">{{::card.group.Name}}</a></p>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <p><strong><span class="fa fa-fw fa-clock-o text-muted"></span> Дата регистрации: </strong>{{::card.account.RegisterDate|amCalendar:referenceTime:formats}}</p>
+                    <p><strong><span class="fa fa-fw fa-clock-o fa-rotate-90 text-muted"></span> Последние изменения: </strong>{{card.account.updated_at|amTimeAgo}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12 divider text-center">
+                <div class="col-xs-12 col-sm-12 col-md-3 emphasis">
+                    <h2><strong> {{card.account.Money|currency:'грн'}}</strong> <small ng-if="card.account.InPawn > 0">/ залог {{card.account.InPawn|currency:'грн'}}</small></h2>
+                    <p><small>Баланс</small></p>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <span class="label label-danger pull-right">{{card.account.Charged|number:0}}</span>
+                            <em class="fa fa-fw fa-arrow-circle-right text-muted"></em>Пополнено</div>
+                        <div class="list-group-item">
+                            <span class="label label-danger pull-right">{{card.account.Spend|number:0}}</span>
+                            <em class="fa fa-fw fa-arrow-circle-left text-muted"></em>Потрачено</div>
+                    </div>
+                    <div ng-hide="card.account.Blocked || card.account.Deleted" permission permission-only="['account.*','account.charge-balance','account.release-balance']">
+                        <button autofocus="autofocus" ng-click="chargeBalance()" class="btn btn-success btn-block" permission permission-only="'account.charge-balance'">
+                            <span class="fa fa-fw fa-plus-circle"></span> Пополнить счет<span ng-if="card.group.MinMoneyToEmit > 0">(мин:{{card.group.MinMoneyToEmit|currency:'грн'}})</span>
+                        </button>
+                        <button ng-disabled="!card.account.Money" ng-click="releaseBalance()" class="btn btn-success btn-block" permission permission-only="'account.release-balance'"><span class="fa fa-fw fa-minus-circle"></span> Снять средства</button>
+                        <button ng-if="card.account.InPawn > 0" ng-disabled="!card.account.level.ReturnPawn" title="Доступно не для всех уровней" class="btn btn-success btn-block"><span class="fa fa-fw fa-minus-square"></span> Вернуть залог ({{card.account.InPawn|currency:'грн'}})</button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 emphasis">
+                    <h2><strong> {{card.account.Bonuses|currency:'грн'}} </strong></h2>
+                    <p><small>Бонусы</small></p>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <span class="label label-danger pull-right">{{card.account.ChargedBonuses|number:0}}</span>
+                            <em class="fa fa-fw fa-arrow-circle-right text-muted"></em>Получено</div>
+                        <div class="list-group-item">
+                            <span class="label label-danger pull-right">{{card.account.SpendBonuses|number:0}}</span>
+                            <em class="fa fa-fw fa-arrow-circle-left text-muted"></em>Потрачено</div>
+                    </div>
+                    <div ng-hide="card.account.Blocked || card.account.Deleted" permission permission-only="['account.*', 'account.bonuses-add', 'account.bonuses-release']">
+                        <button ng-click="controller.bonusesAdd()" class="btn btn-info btn-block" permission permission-only="'account.bonuses-add'"><span class="fa fa-fw fa-plus-circle"></span> Добавить бонусы</button>
+                        <button ng-click="controller.bonusesRelease()" class="btn btn-info btn-block" permission permission-only="'account.bonuses-release'" ng-disabled="!card.account.Bonuses"><span class="fa fa-fw fa-minus-circle"></span> Снять бонусы</button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 emphasis">
+                    <h2><strong> {{card.account.Tickets|number:0}} </strong></h2>
+                    <p><small>Билеты</small></p>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <span class="label label-danger pull-right">{{card.account.ChargedTickets|number:0}}</span>
+                            <em class="fa fa-fw fa-arrow-circle-right text-muted"></em>Заработано</div>
+                        <div class="list-group-item">
+                            <span class="label label-danger pull-right">{{card.account.SpendTickets|number:0}}</span>
+                            <em class="fa fa-fw fa-arrow-circle-left text-muted"></em>Потрачено</div>
+                    </div>
+                    <div ng-hide="card.account.Blocked || card.account.Deleted" permission permission-only="['account.*','account.tickets-add','account.tickets-exchange']">
+                        <button ng-click="controller.ticketsAdd()" class="btn btn-primary btn-block" permission permission-only="'account.tickets-add'"><span class="fa fa-fw fa-ticket"></span> Внести билеты </button>
+                        <button ng-click="controller.ticketsExchange()" ng-disabled="!card.account.Tickets" class="btn btn-primary btn-block" permission permission-only="'account.tickets-exchange'"><span class="fa fa-fw fa-gift"></span> Выдать товар </button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 emphasis">
+                    <h2><span class="fa fa-fw fa-credit-card"></span></h2>
+                    <p><small>Управление картой</small></p>
+                    <div ng-hide="card.account.Blocked || card.account.Deleted" class="list-group" permission permission-only="['account.*']">
+                        <div class="list-group-item">
+                            <a href="" ng-click="controller.changeCard()"><span class="fa fa-fw fa-retweet"></span> Заменить карту </a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="" ng-click="controller.changeCard(true)" title="Стоимость замены сломанной карты можно установить на странице настройки групп">
+                                <span class="fa fa-fw fa-recycle"></span> Замена сломанной карты (<span ng-if="card.group.CardRepairCost > 0">стоимость:{{card.group.CardRepairCost|currency:'грн'}}</span><span ng-if="card.group.CardRepairCost == 0">бесплатно</span>)
+                            </a>
+                        </div>
+                        <!--
+                        <div ng-if="!card.account.Blocked" class="list-group-item">
+                            <a href="#"><span class="fa fa-fw fa-lock"></span> Заблокировать карту </a>
+                        </div>
+                        <div ng-if="card.account.Blocked" class="list-group-item">
+                            <a href="#"><span class="fa fa-fw fa-unlock"></span> Разблокировать карту </a>
+                        </div>
+                        <div ng-if="!card.account.Deleted" class="list-group-item">
+                            <a href="#"><span class="fa fa-fw fa-trash-o"></span> Удалить карту </a>
+                        </div>
+                        <div ng-if="card.account.Deleted" class="list-group-item">
+                            <a href="#"><span class="fa fa-fw fa-toggle-on"></span> Восстановить карту </a>
+                        </div>
+                        -->
+                    </div>
+                    <div class="btn-group btn-group-justified" role="group">
+                        <button type="button" permission permission-only="['administrator', 'account.*']" class="btn btn-default" bs-dropdown><span class="fa fa-fw fa-credit-card-alt"></span> Дополнительно <span class="caret"></span></button>
+                        <!--<button type="button" class="btn btn-default dropdown-toggle" bs-dropdown placement="top" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                            <!--<span class="caret"></span>-->
+                            <!--<span class="sr-only">Toggle Dropdown</span>-->
+                        <!--</button>-->
+                        <ul class="dropdown-menu text-left" role="menu">
+                            <li ng-hide="card.account.Blocked"><a href="" ng-click="controller.accountBlockToggle()"><span class="fa fa-fw fa-lock"></span> Заблокировать карту </a></li>
+                            <li ng-show="card.account.Blocked"><a href="" ng-click="controller.accountBlockToggle()"><span class="fa fa-fw fa-unlock"></span> Разблокировать карту </a></li>
+                            <li ng-hide="card.account.Deleted"><a href="" ng-click="controller.accountDelete()"><span class="fa fa-fw fa-trash-o"></span> Удалить карту </a></li>
+                            <li ng-show="card.account.Deleted"><a href="" ng-click="controller.accountUnDelete()"><span class="fa fa-fw fa-toggle-on"></span> Восстановить карту </a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" class="btn disabled" role="button"> {{card.HardID}} </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

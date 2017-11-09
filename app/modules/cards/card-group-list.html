@@ -1,0 +1,54 @@
+<div class="row">
+    <div ng-include="'cards/tabs.html'"></div>
+    <table ng-table="controller.tableParams" class="table table-bordered table-hover" show-filter="true">
+        <tr ng-repeat="group in $data" ng-class="{'success': group.IsService, 'danger': group.Deleted, 'info': group.IsDefaultForNewCard}">
+            <!--<td title="'№'" filter="{ id: 'number'}" sortable="'id'">-->
+                <!--{{group.id}}-->
+            <!--</td>-->
+            <td title="'Название'" filter="{ Name: 'text'}" sortable="'Name'">
+                {{group.Name}} <br/><small>{{group.Description}}</small>
+            </td>
+            <td class="text-center" title="'Сервисная группа'" filter="{ IsService: 'text'}" sortable="'IsService'">
+                <i ng-if="group.IsService" class="fa fa-2x fa-user-md" aria-hidden="true"></i>
+                <i ng-if="!group.IsService" class="fa fa-minus" aria-hidden="true"></i>
+            </td>
+            <td class="text-center" title="'Группа по-умолчанию для новых клиентов'" filter="{ IsDefaultForNewCard: 'text'}" sortable="'IsDefaultForNewCard'">
+                <i ng-if="group.IsDefaultForNewCard" class="fa fa-2x fa-user-plus" aria-hidden="true"></i>
+                <i ng-if="!group.IsDefaultForNewCard" class="fa fa-minus" aria-hidden="true"></i>
+            </td>
+            <td class="text-center" title="'Мин. сумма пополнения'" filter="{ MinMoneyToEmit: 'text'}" sortable="'MinMoneyToEmit'">
+                {{group.MinMoneyToEmit|currency:'грн'}}
+            </td>
+            <td class="text-center" title="'Стоимость регистрации карты'" filter="{ EmitCardCost: 'text'}" sortable="'EmitCardCost'">
+                {{group.EmitCardCost|currency:'грн'}}
+            </td>
+            <td class="text-center" title="'Залог'" filter="{ CardDeposit: 'text'}" sortable="'CardDeposit'">
+                {{group.CardDeposit|currency:'грн'}}
+            </td>
+            <td class="text-center" title="'Стоимость замены карты'" filter="{ CardRepairCost: 'text'}" sortable="'CardRepairCost'">
+                {{group.CardRepairCost|currency:'грн'}}
+            </td>
+            <td class="text-center" title="'Удалена'" filter="{ Deleted: 'text'}" sortable="'Deleted'">
+                {{group.Deleted ? 'Да' : 'Нет'}}
+            </td>
+            <td data-title="" style="width: 125px">
+                <div class="btn-group pull-right" role="group" aria-label="действия">
+                    <a ng-if="group.id > 5" class="btn btn-primary btn-sm" href="" ng-click="controller.setAsDefaultGroup(group)" aria-label="сделать группой по-умолчанию" title="сделать группой по-умолчанию">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-primary btn-sm" href="" ng-click="controller.edit(group)" aria-label="редактирование" title="редактировать">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm" href="" ng-click="controller.delete(group)" aria-label="удаление" title="удаление">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p><a class="btn btn-primary" ng-click="controller.addNew()"><span class="fa fa-fw fa-plus"></span> Добавить</a></p>
+    </div>
+</div>

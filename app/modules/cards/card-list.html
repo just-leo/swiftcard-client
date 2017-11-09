@@ -1,0 +1,32 @@
+<div ng-include="'cards/tabs.html'"></div>
+<table ng-table="controller.tableParams" class="table table-bordered table-hover" show-filter="true">
+    <tr ng-repeat="card in $data" ng-class="{'danger': card.account.Deleted, 'warning': card.account.Blocked}">
+        <!--<td title="'id'" filter="{ id: 'number'}" sortable="'id'">-->
+            <!--{{card.id}}-->
+        <!--</td>-->
+        <td class="text-center" title="'Номер'" filter="{ ShortID: 'number'}" sortable="'ShortID'">
+            <a ui-sref="root.aside.main.account({CardID: card.id})">{{card.ShortID}}</a>
+        </td>
+        <td class="text-center" title="'Полный номер'" filter="{ HardID: 'text'}" sortable="'HardID'">
+            {{card.HardID}}
+        </td>
+        <td class="text-center" title="'Группа'" filter="{ 'GroupID': 'select'}" filter-data="controller.cardGroups" sortable="'GroupID'">
+            {{card.group.Name}}
+        </td>
+        <td class="text-center" title="'Уровень'" filter="{ 'account.Level.Name': 'text'}" sortable="'LevelID'">
+            {{card.account.level.Name}}
+        </td>
+        <td class="text-center" title="'Баланс'" filter="{ 'account.Money': 'text'}" sortable="'Money'">
+            {{card.account.Money|currency:'грн'}}
+        </td>
+        <td class="text-center" title="'Бонусы'" filter="{ 'account.Bonuses': 'text'}" sortable="'Bonuses'">
+            {{card.account.Bonuses|currency:'грн'}}
+        </td>
+        <td class="text-center" title="'Потратил'" sortable="'Spend'">
+            {{card.account.Spend|currency:'грн'}} +<br/>{{card.account.SpendBonuses|currency:'грн'}}
+        </td>
+        <td title="'Дата регистрации'" sortable="'RegisterDate'">
+            {{card.account.RegisterDate|amCalendar:referenceTime:formats}}
+        </td>
+    </tr>
+</table>

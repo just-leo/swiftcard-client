@@ -1,0 +1,117 @@
+<form class="form-horizontal" name="$actionForm" ng-submit="save()" novalidate>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" ng-class="{'has-success': $actionForm.name.$valid, 'has-error': ($actionForm.name.$touched && $actionForm.name.$invalid) || ($actionForm.$submitted && $actionForm.name.$invalid)}">
+                <label for="" class="col-sm-3 control-label">Название</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="name" ng-model="action.name" ng-required="true">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Условия действия акции</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" ng-class="{'has-success': $actionForm.schedule.$valid, 'has-error': $actionForm.schedule.$invalid}">
+                                <label for="" class="col-sm-3 control-label">Расписание</label>
+                                <div class="col-sm-6">
+                                    <input type="hidden" class="form-control" name="schedule"
+                                           cron-control="{{action.schedule}}" cron-default-period="week"
+                                           ng-model="action.schedule">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-success': $actionForm.dateFrom.$valid, 'has-error': $actionForm.dateFrom.$touched && $actionForm.dateFrom.$invalid}">
+                                <label class="col-sm-3 control-label">Начиная с</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" ng-model="action.dateFrom" name="dateFrom" data-start-week="1" data-autoclose="1" data-date-type="number" data-min-date="today" placeholder="From" bs-datepicker ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-success': $actionForm.dateTo.$valid, 'has-error': $actionForm.dateTo.$touched && $actionForm.dateTo.$invalid}">
+                                <label class="col-sm-3 control-label">по</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" ng-model="action.dateTo" name="dateTo" data-start-week="1" data-autoclose="1" data-date-type="number" data-min-date="{{action.dateFrom}}" placeholder="To" bs-datepicker ng-required="true">
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label class="col-sm-6 col-sm-offset-1 control-label">
+                                    <input type="hidden" name="withHighPriority" ng-model="action.withHighPriority">Высокий приоритет
+                                    <div class="btn-group" ng-model="action.withHighPriority" bs-radio-group>
+                                        <label class="btn btn-default"><input type="radio" class="btn btn-default" value="1"> Да</label>
+                                        <label class="btn btn-default"><input type="radio" class="btn btn-default" value="0"> Нет</label>
+                                    </div>
+                                    <span class="help-block">Высокий приоритет, означает, что акция может применяться поверх остальных акций (одновременно). Если отключено, то применятеся только та акция, которая предоставляет большую скидку.</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Настройки акции</div>
+                <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="form-group row" ng-if="discountClass.isMultiple" ng-repeat="discount in discountClass.discounts" ng-init="outerIndex = $index">
+                                <div class="col-md-6"
+                                     ng-class="{'has-success': $actionForm[outerIndex][attribute.name].$valid, 'has-error': ($actionForm.$submitted || $actionForm[outerIndex][attribute.name].$touched) && $actionForm[outerIndex][attribute.name].$invalid}"
+                                     ng-repeat="attribute in discount">
+                                    <label class="sr-only control-label">{{attribute.label}}</label>
+                                    <input type="number" class="form-control" placeholder="{{attribute.label}}" ng-model="action.discounts[outerIndex][attribute.name]" name="[{{outerIndex}}]{{attribute.name}}">
+                                </div>
+                            </div>
+                            <div class="form-group row" ng-if="!discountClass.isMultiple" ng-repeat="attribute in discountClass.discount">
+                                <div class="col-md-12"
+                                     ng-class="{'has-success': $actionForm[attribute.name].$valid, 'has-error': ($actionForm.$submitted || $actionForm[attribute.name].$touched) && $actionForm[attribute.name].$invalid}">
+                                    <label class="control-label col-sm-3">{{attribute.label}}</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" ng-required="true" class="form-control" placeholder="{{attribute.label}}" ng-model="action.discount[attribute.name]" name="{{attribute.name}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" ng-if="action.discount.objects">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <a class="" role="button" data-toggle="collapse" href="" aria-expanded="false">Выбрать объекты на которые распространяется действие акции</a>
+                </div>
+                <div class="panel-body" id="collapseObjectList">
+                    <div class="col-md-12">
+                        <ui-select ng-model="action.discount.objects" multiple>
+                            <ui-select-match allow-clear="true" placeholder="Выберите объекты">
+                                <span ng-bind="$item.Name"></span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="object in (objectList | filter: $select.search) track by object.id">
+                                <div ng-bind="object.Name"></div>
+                                <small ng-bind="object.HardID"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <button type="submit" ng-disabled="$actionForm.$submitted && $actionForm.$invalid"
+                            class="btn btn-primary">
+                        <span class="fa fa-fw fa-plus"></span> Сохранить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

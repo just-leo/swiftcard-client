@@ -1,0 +1,20 @@
+<div class="row">
+    <form class="form-horizontal col-sm-7 col-sm-offset-2" method="post" name="$reportForm" ng-submit="controller.get()">
+        <div class="form-group registration-date">
+            <label class="control-label col-sm-3" for="report-from">Даты:</label>
+            <div class="input-group registration-date-time" ng-class="{'has-error': $reportForm.$invalid}">
+                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                <input class="form-control" name="dateFrom" ng-model="model.dateFrom" data-max-date="{{dateUntil}}" id="report-from" type="text"
+                       data-start-week="1" data-autoclose="1" data-date-type="number" bs-datepicker ng-required="true">
+                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                <input class="form-control" name="dateUntil" ng-model="model.dateUntil" data-min-date="{{dateFrom}}" date-max-date="today" id="report-until" type="text"
+                       data-start-week="1" data-autoclose="1" data-date-type="number" bs-datepicker ng-required="true">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="submit" ng-disabled="inProgress">
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Сгенерировать
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>

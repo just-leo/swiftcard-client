@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-xs-6 col-md-4">
+        <div class="panel status panel-danger">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{data.totalRegistered}}</h1>
+            </div>
+            <div class="panel-body text-center">
+                <strong>Всего карт</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-4">
+        <div class="panel status panel-warning">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{data.yesterdayRegistered}}</h1>
+            </div>
+            <div class="panel-body text-center">
+                <strong>Вчера</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <div class="panel status panel-success">
+            <div class="panel-heading">
+                <h1 class="panel-title text-center">{{data.todayRegistered}}</h1>
+            </div>
+            <div class="panel-body text-center">
+                <strong>Сегодня</strong>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-xs-6 col-md-3">-->
+        <!--<div class="panel status panel-info">-->
+            <!--<div class="panel-heading">-->
+                <!--<h1 class="panel-title text-center">{{data.averageRegisteredPerDay}}</h1>-->
+            <!--</div>-->
+            <!--<div class="panel-body text-center">-->
+                <!--<strong>Новых карт / день</strong>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div id="imaginary_container">
+            <div class="input-group stylish-input-group">
+                <input type="search" ng-model="query" ng-change="search(query)" minlength="2" class="form-control input-lg"  placeholder="Введите номер карты..." ng-virtual-keyboard >
+                <span class="input-group-addon">
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="list-group">
+            <a ui-sref="root.aside.main.account({CardID:card.ID})" class="list-group-item text-center" ng-class="{'list-group-item-danger': card.account.Deleted, 'list-group-item-warning': card.account.Blocked}" ng-repeat="card in cardList track by card.ID">
+                <h4 class="list-group-item-heading"><span class="fa fa-fw fa-credit-card"></span>{{card.ShortID}}</h4>
+                <p class="list-group-item-text"><span class="fa fa-fw fa-clock-o fa-rotate-90 text-muted"></span>{{card.account.RegisterDate|amCalendar}} <span class="fa fa-fw fa-money" aria-hidden="true"></span>{{card.account.Money|currency}} / {{card.account.Bonuses|currency}}</p>
+            </a>
+        </div>
+    </div>
+</div>

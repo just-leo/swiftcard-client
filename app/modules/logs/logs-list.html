@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-offset-8 col-md-4">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="" class="col-sm-1 control-label">Уровень логов</label>
+                <div class="col-sm-3">
+                    <ui-select ng-model="controller.tableParams.filter().level" theme="bootstrap" search-enabled="false">
+                        <ui-select-match placeholder="Уровень логов">{{$select.selected.title}}</ui-select-match>
+                        <ui-select-choices repeat="level in controller.logLevels track by $index">
+                            <span
+                                    ng-class="{'text-info': level.id === 4, 'text-danger': level.id === 1, 'text-warning': level.id === 2}"
+                                    ng-bind="level.title"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table ng-table="controller.tableParams" class="table table-bordered table-hover" show-filter="true">
+                <tr ng-repeat="row in $data" ng-class="{'danger': row.level === 'error'}" class="{{row.level}}">
+                    <!--<td data-title="'Уровень'" filter="{ level: 'select'}" filter-data="controller.logLevels">-->
+                        <!--{{row.level}}-->
+                    <!--</td>-->
+                    <td data-title="'Время'" sortable="'log_time'">
+                        {{row.log_time|amCalendar:referenceTime:formats}}<small>:{{row.log_time|amDateFormat:'ss'}}</small>
+                    </td>
+                    <td class="text-center" data-title="'Категория'" filter="{ category: 'text'}" sortable="'category'">
+                        {{row.category}}
+                    </td>
+                    <td data-title="'Запись'" filter="{ message: 'text'}">
+                        {{row.message}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

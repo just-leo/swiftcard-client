@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <p><a class="btn btn-primary" ng-click="addNew()"><span class="fa fa-fw fa-plus"></span> Добавить</a></p>
+    </div>
+</div>
+<div class="table-responsive">
+    <table ng-table="tableParams" class="table table-bordered table-hover" show-filter="true">
+        <tr ng-repeat="object in $data" ng-class="{'danger': object.Disabled}">
+            <td data-title="'Название'" filter="{ Name: 'text'}" sortable="'Name'">
+                {{object.Name}}
+            </td>
+            <td data-title="'Адрес'" filter="{ HardID: 'number'}" sortable="'HardID'">
+                {{object.HardID}}
+            </td>
+            <td data-title="'Цена импульса'" filter="{ CoinPrice: 'text'}" sortable="'CoinPrice'">
+                {{object.CoinPrice|currency:'грн'}}
+            </td>
+            <td data-title="'Число имп'">
+                {{object.function.Price}}
+            </td>
+            <td data-title="'Стоимость'">
+                {{object.CoinPrice * object.function.Price|currency:'грн'}}
+            </td>
+            <td data-title="'Добавлен'" sortable="'created_at'">
+                {{object.created_at|amCalendar:referenceTime:formats}}
+            </td>
+            <td data-title="" style="width: 85px">
+                <div class="btn-group pull-right" role="group" aria-label="действия">
+                    <a class="btn btn-primary btn-sm" href="" ng-click="edit(object)" aria-label="редактирование">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm" href="" ng-click="disableObject(object)" aria-label="отключение">
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,41 @@
+<div class="table-responsive">
+    <table ng-table="controller.tableParams" class="table table-bordered table-hover" show-filter="true">
+        <tr ng-repeat="row in $data" ng-class="{'warning': row.CancelAccountID > 0}">
+            <td data-title="'№'" filter="{ ID: 'text'}" sortable="'ID'">
+                {{row.ID}}
+            </td>
+            <td data-title="'Проведено'" sortable="'EventTime'">
+                {{row.EventTime|amCalendar:referenceTime:formats}}
+            </td>
+            <td data-title="'Сумма'" filter="{ CashSum: 'text'}" sortable="'CashSum'">
+                <span ng-if="row.class.Type == 1" class="fa fa-plus-square"></span>
+                <span ng-if="row.class.Type == 2" class="fa fa-minus-square"></span>
+                {{row.CashSum|currency:'грн'}}
+            </td>
+            <!--<td data-title="'Тип'" filter="{ 'CancelTime': 'number'}" sortable="'CancelTime'" class="text-center">-->
+                <!--<span ng-if="row.class.Type == 1" class="fa fa-plus-square"></span>-->
+                <!--<span ng-if="row.class.Type == 2" class="fa fa-minus-square"></span>-->
+            <!--</td>-->
+            <td data-title="'Операция'" sortable="'ClassID'">
+                {{row.description}}
+            </td>
+            <td data-title="'Объект'" sortable="'action'">
+                {{row.object.Name}}
+            </td>
+            <td data-title="'Комментарий'" filter="{ Comment: 'text'}">
+                {{row.Comment}}
+            </td>
+            <!--<td data-title="'Кассир'" filter="{ 'action': 'text'}" sortable="'action'">-->
+                <!--<a ui-sref="root.aside.main.account({CardID: row.accountant.ID})">{{row.accountant.ID}}</a>-->
+            <!--</td>-->
+            <td data-title="" permission permission-only="'administrator'" style="width: 40px">
+                <a ng-show="!row.CancelAccountID" class="btn btn-danger btn-sm" href="" ng-click="controller.cancel(row)" aria-label="Отменить" title="Отменить операцию">
+                    <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                </a>
+                <a ng-show="row.CancelAccountID > 0" class="btn btn-default btn-sm" href="" ng-click="controller.apply(row)" aria-label="Применить" title="Применить">
+                    <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>

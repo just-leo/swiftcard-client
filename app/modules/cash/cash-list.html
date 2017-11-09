@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-sm-12 col-md-offset-2 col-md-8">
+        <div class="bs-calltoaction -bs-calltoaction-primary alert-info">
+            <div class="row">
+                <div class="col-md-9 cta-contents">
+                    <h1 class="cta-title"><i class="fa fa-money" aria-hidden="true"></i> Выручка кассы</h1>
+                    <div class="cta-desc">
+                        <h2>{{data.CashBox|currency}}<span ng-show="model.CashBox > 0"> - {{model.CashBox|currency}} = остаток <strong>{{(data.CashBox-model.CashBox)|currency}}</strong></span></h2>
+                    </div>
+                </div>
+                <div class="col-md-3 cta-button">
+                    <div class="form-group" ng-show="showCashBoxForm" ng-class="{'has-error': cashboxForm.$invalid}">
+                        <div class="input-group">
+                            <input type="number" min="0" max="{{data.CashBox}}" autofocus="autofocus" ng-form="cashboxForm"
+                                   class="form-control input-lg"
+                                   ng-model="model.CashBox" ng-virtual-keyboard />
+                            <div class="input-group-addon">грн.</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-lg btn-block btn-primary" ng-show="!showCashBoxForm" ng-click="controller.setToSafe()" ng-disabled="data.CashBox==0"><i class="fa fa-long-arrow-right" aria-hidden="true"></i> в сейф</button>
+                    <div class="btn-group" ng-show="showCashBoxForm" role="group" aria-label="действия">
+                        <button class="btn btn-success" ng-click="controller.save()" ng-disabled="cashboxForm.$invalid">ОК</button>
+                        <button class="btn btn-default" ng-click="controller.reset()">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-offset-2 col-md-8">
+        <div class="bs-calltoaction -bs-calltoaction-success alert-success">
+            <div class="row">
+                <div class="col-md-9 cta-contents">
+                    <h1 class="cta-title"><i class="fa fa-archive" aria-hidden="true"></i> Сейф</h1>
+                    <div class="cta-desc">
+                        <h2>
+                            {{data.Safe|currency}}
+                            <span ng-show="model.CashBox > 0"> + {{model.CashBox|currency}} = остаток <strong>{{(data.Safe + model.CashBox)|currency}}</strong></span>
+                            <span ng-show="model.Safe > 0"> - {{model.Safe|currency}} = остаток <strong>{{(data.Safe - model.Safe)|currency}}</strong></span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-md-3 cta-button">
+                    <div class="form-group" ng-show="showSafeForm" ng-class="{'has-error': safeForm.$invalid}">
+                        <div class="input-group">
+                            <input type="number" min="0" max="{{data.Safe}}" autofocus="autofocus" ng-form="safeForm"
+                                   class="form-control input-lg"
+                                   data-ng-model="model.Safe" ng-disabled="!data.Safe" ng-virtual-keyboard />
+                            <div class="input-group-addon">грн.</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-lg btn-block btn-success" ng-show="!showSafeForm" ng-click="controller.setToPickup()" ng-disabled="data.Safe==0">инкассировать</button>
+                    <div class="btn-group" ng-show="showSafeForm" role="group" aria-label="действия">
+                        <button class="btn btn-success" ng-click="controller.save()" ng-disabled="safeForm.$invalid">ОК</button>
+                        <button class="btn btn-default" ng-click="controller.reset()">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

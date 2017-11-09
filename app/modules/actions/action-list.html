@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+            <button type="button" class="btn btn-primary" bs-dropdown>
+                <span class="fa fa-fw fa-plus"></span> Добавить<span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="discount in actionClasses"><a ng-href="#" ng-click="$event.preventDefault();addNew(discount)"><i class="fa fa-chevron-right"></i> {{discount.name}}</a></li>
+            </ul>
+    </div>
+</div>
+<div class="table-responsive">
+    <table ng-table="tableParams" class="table table-bordered table-hover" show-filter="true">
+        <tr ng-repeat="row in $data" ng-class="{'warning': row.disabled, 'danger': row.deleted}">
+            <td data-title="'Название'" filter="{ name: 'text'}" sortable="'name'">
+                {{row.name}}<br/><span class="label label-danger">{{row.isActive}}</span>
+            </td>
+            <td data-title="'Расписание'">
+                <div cron-control="{{row.schedule}}" cron-no-reset-button="true" cron-enabled="false"></div>
+            </td>
+            <td data-title="'От'" sortable="'dateFrom'">
+                {{row.dateFrom|amDateFormat:'Do MMMM YYYY'}}
+            </td>
+            <td data-title="'До'" sortable="'dateTo'">
+                {{row.dateTo|amDateFormat:'Do MMMM YYYY'}}
+            </td>
+            <!--<td data-title="'Стоимость за 1ч.'">-->
+                <!--{{row.pricePerHour ? (row.pricePerHour|currency) : 'не применимо'}}-->
+            <!--</td>-->
+            <td data-title="'Описание'">
+                {{row.description ? row.description : ''}}
+            </td>
+            <td data-title="'Высокий приоритет'" class="text-center" ng-bind-html="trustAsHtml(row.withHighPriority)">
+            </td>
+            <!--<td data-title="'Настройки'" filter="{ settings: 'text'}" sortable="'settings'">-->
+                <!--{{row.settings|json}}-->
+            <!--</td>-->
+            <td data-title="'Откл'" sortable="'disabled'">
+                {{row.disabled ? 'Да' : 'Нет'}}
+            </td>
+            <!--<td data-title="'Удал'" sortable="'deleted'">-->
+                <!--{{row.deleted ? 'Да' : 'Нет'}}-->
+            <!--</td>-->
+            <td data-title="'Последнее обн'" sortable="'updated_at'">
+                {{row.updated_at|amCalendar}}
+            </td>
+            <td data-title="" style="width: 85px">
+                <div class="btn-group pull-right" role="group" aria-label="действия">
+                    <a class="btn btn-primary btn-sm" href="" ng-click="edit(row)" aria-label="редактирование" title="редактировать">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm" href="" ng-click="disable(row)" aria-label="отключение" title="включение/отключение">
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                    </a>
+                    <!--<a class="btn btn-danger btn-sm" href="" ng-click="delete(row)" aria-label="удаление">-->
+                        <!--<i class="fa fa-trash" aria-hidden="true"></i>-->
+                    <!--</a>-->
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,75 @@
+<form class="form-horizontal" name="$groupForm" ng-submit="save()" novalidate>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.Name.$valid, 'has-error': $groupForm.Name.$touched && $groupForm.Name.$invalid}">
+        <label for="Name" class="col-sm-3 control-label">Название</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="Name" ng-required="true" ng-model="group.Name">
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.Description.$valid, 'has-error': $groupForm.Description.$touched && $groupForm.Description.$invalid}">
+        <label for="Description" class="col-sm-3 control-label">Описание</label>
+        <div class="col-sm-9">
+            <textarea rows="2" type="text" class="form-control" style="resize: vertical" name="Description" ng-model="group.Description"></textarea>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.IsService.$valid, 'has-error': $groupForm.IsService.$touched && $groupForm.IsService.$invalid}">
+        <label for="IsService" class="col-sm-3 control-label">Сервисная группа</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="IsService" ng-model="group.IsService">
+            <div class="btn-group" ng-model="group.IsService" bs-radio-group>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="1"> Да</label>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="0"> Нет</label>
+            </div>
+            <span class="help-block">Карты сервисных групп не учавствуют в финансовых операциях</span>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.MinMoneyToEmit.$valid, 'has-error': $groupForm.MinMoneyToEmit.$invalid}">
+        <label for="MinMoneyToEmit" class="col-sm-3 control-label">Мин. сумма пополнения</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input type="number" class="form-control" min="0" name="MinMoneyToEmit" ng-required="true" ng-model="group.MinMoneyToEmit">
+                <div class="input-group-addon">грн.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.EmitCardCost.$valid, 'has-error': $groupForm.EmitCardCost.$invalid}">
+        <label for="EmitCardCost" class="col-sm-3 control-label">Стоимость регистрации карты</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input type="number" class="form-control" min="0" name="EmitCardCost" ng-required="true" ng-model="group.EmitCardCost">
+                <div class="input-group-addon">грн</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.CardDeposit.$valid, 'has-error': $groupForm.CardDeposit.$invalid}">
+        <label for="CardDeposit" class="col-sm-3 control-label">Залоговая стоимость</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input type="number" class="form-control" min="0" name="CardDeposit" ng-required="true" ng-model="group.CardDeposit">
+                <div class="input-group-addon">грн</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-success': $groupForm.CardRepairCost.$valid, 'has-error': $groupForm.CardRepairCost.$invalid}">
+        <label for="CardRepairCost" class="col-sm-3 control-label">Стоимость замены карты</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input type="number" class="form-control" min="0" name="CardRepairCost" ng-required="true" ng-model="group.CardRepairCost">
+                <div class="input-group-addon">грн</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12 text-right">
+            <button type="submit" ng-disabled="$groupForm.$invalid" class="btn btn-primary preview-add-button">
+                <span class="fa fa-fw fa-plus"></span> {{group.id ? 'Сохранить' : 'Добавить'}}
+            </button>
+        </div>
+    </div>
+</form>
