@@ -80,7 +80,7 @@ angular
 
 		apiProvider
 			.addEndpoint('objects', {
-				route: 'object'
+				route: 'objects'
 			})
 			.addEndpoint('card', {
 				restService: 'CardRest',
@@ -103,7 +103,7 @@ angular
 				]
 			})
 			.addEndpoint('cardGroups', {
-				route: 'card-group',
+				route: 'card-groups',
 				methods: [
 					{
 						name: 'available'
@@ -115,7 +115,7 @@ angular
 					}
 				]
 			})
-			.addEndpoint('account', {
+			.addEndpoint('accounts', {
 				methods: [
 					{
 						name: 'charge-balance',
@@ -145,7 +145,7 @@ angular
 				]
 			})
 			.addEndpoint('accountLevels', {
-				route: 'account-level'
+				route: 'levels'
 			})
 			.addEndpoint('finances', [
 				{
