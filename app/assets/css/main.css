@@ -1,4 +1,6 @@
-﻿body {
+﻿@import "new-theme.css";
+
+body {
     margin: 0;
     border: 0;
     padding: 0px;
@@ -747,7 +749,7 @@ table.keyboardInputMaster {
 }
 table.keyboardInputMaster thead tr th {
     padding: 0 0.3em;
-    -webkit-border-radius:0
+    -webkit-border-radius:0;
     -moz-border-radius:0;
     border-radius:0;
 }
