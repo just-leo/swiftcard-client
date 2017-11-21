@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    font-family: Roboto, sans-serif;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+main {
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+
+.sidebar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #2a2b3c;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #0cc2aa;
+}
+
+.navbar {
+    height: 70px;
+    background: rgb(39, 40, 56);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.navbar-brand {
+    height: 70px;
+}
+
+#divContents {
+    margin-top: 50px;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    /*height: 70px !important;*/
+}
+
+.navbar-brand>img {
+    display: block;
+    margin-top: 1px;
+}
+
+.navbar-brand.navbar-brand-w-img img{
+    filter: none !important;
+}
+
+@media (max-width: 1024px) {
+    #divContents .sidebar a span {
+        display: none;
+    }
+
+    .nav > li > a > img {
+        margin: auto;
+        display: block;
+    }
+
+    .nav > li {
+        width: 100px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand{
+        line-height: 40px;
+        color: #fff;
+    }
+    #divContents .sidebar {
+        background-color: #2a2b3c;
+        top: 70px;
+    }
+
+    .navbar-header {
+        /*height: 70px;*/
+    }
+}
+
+.nav > li {
+    background: rgb(42, 43, 60);
+}
+
+#divContents .sidebar a {
+    background: rgb(42, 43, 60);
+}
+
+#divContents .sidebar a span {
+    padding-left: 15px;
+    color: rgba(255, 255, 255, .87);
+    font-size: 16px;
+
+}
+
+.nav > li > a:hover {
+    background: rgb(39, 40, 56);
+}
+
+.nav > li:last-child {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+#divContents .sidebar li > a:hover {
+    background: rgb(39, 40, 56);
+}
+
+#divContents .sidebar li.active > a {
+    background: #0cc2aa;
+    border-radius: 10px;
+    margin: 0 10px;
+}
